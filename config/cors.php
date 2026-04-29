@@ -1,0 +1,71 @@
+<?php
+/*
+|--------------------------------------------------------------------------
+| Access-Control-Max-Age
+|--------------------------------------------------------------------------
+|
+| This defines the maximum age (in seconds) that the results of a preflight
+| request can be cached by the client.
+|
+*/
+return [
+    'max_age' => 0,
+    'exposed_headers' => [
+        'phpdebugbar-stack',
+        'phpdebugbar-id',
+        'phpdebugbar-time',
+        'phpdebugbar-queries',
+        'phpdebugbar-ajax',
+        'phpdebugbar-headers',
+        'phpdebugbar-session',
+        'phpdebugbar-collectors',
+        'phpdebugbar-route',
+        'phpdebugbar-exception',
+        'phpdebugbar-view',
+        'phpdebugbar-logs',
+        'phpdebugbar-mail',
+        'phpdebugbar-files',
+        'phpdebugbar-gates',
+        'phpdebugbar-timeline',
+        'phpdebugbar-memory',
+        'phpdebugbar-flash',
+        'phpdebugbar-phpinfo',
+        'phpdebugbar-variables',
+        'phpdebugbar-queries-time',
+        'phpdebugbar-queries-sql',
+        'phpdebugbar-queries-bindings',
+        'phpdebugbar-queries-explain',
+        'phpdebugbar-queries-connection',
+        'phpdebugbar-queries-file',
+        'phpdebugbar-queries-line',
+        'phpdebugbar-queries-trace',
+        'phpdebugbar-queries-time-data',
+        'phpdebugbar-queries-sql-data',
+        'phpdebugbar-queries-bindings-data',
+        'phpdebugbar-queries-explain-data',
+        'phpdebugbar-queries-connection-data',
+        'phpdebugbar-queries-file-data',
+        'phpdebugbar-queries-line-data',
+        'phpdebugbar-queries-trace-data',
+        'phpdebugber-timeline-data',
+        'phpdebugber-memory-data',
+        'phpdebugber-flash-data',
+        'phpdebugber-phpinfo-data',
+        'phpdebugber-variables-data',
+        'phpdebugber-headers-data',
+        'phpdebugber-session-data',
+        'phpdebugber-collectors-data',
+        'phpdebugber-route-data',
+        'phpdebugber-exception-data',
+        'phpdebugber-view-data',
+        'phpdebugber-logs-data',
+        'phpdebugber-mail-data',
+        'phpdebugber-files-data',
+        'phpdebugber-gates-data',
+        'phpdebugber-timeline-data',
+        'phpdebugber-memory-data',
+        'phpdebugber-flash-data',
+        'phpdebugber-phpinfo-data',
+        'phpdebugber-variables-data'
+    ],
+];

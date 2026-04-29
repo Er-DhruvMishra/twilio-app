@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- Theme tokens --------------------------------------------------------
+   The mobile shell + key surfaces honor these variables. Themes are toggled
+   via classes on <html>: theme-dark (default), theme-light, with theme-hc as
+   an overlay for high-contrast. Most existing Tailwind colors stay dark-only;
+   over time, swap them for var(--shell-fg) etc. for full theming. */
+:root, html.theme-dark {
+    --shell-bg: #0f172a;          /* slate-900 */
+    --shell-frame: #020617;       /* slate-950 */
+    --shell-fg: #e2e8f0;          /* slate-200 */
+    --shell-muted: #94a3b8;       /* slate-400 */
+    --shell-card: rgba(255,255,255,.05);
+    --shell-card-border: rgba(255,255,255,.10);
+    --shell-divider: rgba(255,255,255,.10);
+    --accent: #3b82f6;            /* blue-500 */
+    --accent-fg: #ffffff;
+    color-scheme: dark;
+}
+html.theme-light {
+    --shell-bg: #f1f5f9;          /* slate-100 */
+    --shell-frame: #cbd5e1;       /* slate-300 */
+    --shell-fg: #0f172a;          /* slate-900 */
+    --shell-muted: #475569;       /* slate-600 */
+    --shell-card: rgba(15,23,42,.04);
+    --shell-card-border: rgba(15,23,42,.10);
+    --shell-divider: rgba(15,23,42,.08);
+    --accent: #2563eb;
+    --accent-fg: #ffffff;
+    color-scheme: light;
+}
+html.theme-hc {
+    --shell-card-border: rgba(255,255,255,.4);
+    --shell-divider: rgba(255,255,255,.4);
+    --shell-muted: #f1f5f9;
+}
+html.theme-light.theme-hc {
+    --shell-card-border: rgba(0,0,0,.6);
+    --shell-divider: rgba(0,0,0,.5);
+    --shell-muted: #0f172a;
+}
+
+/* The phone-shell wrappers use these. When in light mode, override the dark
+   gradients used inside <PhoneShell>. */
+html.theme-light .phone-shell-wrap { background: var(--shell-bg); }
+html.theme-light .phone-shell-frame {
+    background: linear-gradient(to bottom, #ffffff, #f8fafc);
+    border-color: var(--shell-frame);
+    color: var(--shell-fg);
+}
+html.theme-light .phone-shell-frame .text-white { color: var(--shell-fg); }
+html.theme-light .phone-shell-frame .text-slate-100,
+html.theme-light .phone-shell-frame .text-slate-200,
+html.theme-light .phone-shell-frame .text-slate-300 { color: var(--shell-fg); }
+html.theme-light .phone-shell-frame .text-slate-400,
+html.theme-light .phone-shell-frame .text-slate-500 { color: var(--shell-muted); }
+html.theme-light .phone-shell-frame .bg-white\/5 { background: rgba(15,23,42,.04); }
+html.theme-light .phone-shell-frame .bg-white\/10 { background: rgba(15,23,42,.07); }
+html.theme-light .phone-shell-frame .border-white\/10,
+html.theme-light .phone-shell-frame .border-white\/15,
+html.theme-light .phone-shell-frame .border-white\/20 { border-color: rgba(15,23,42,.12); }
+html.theme-light .phone-shell-frame .divide-white\/10 > * + * { border-color: rgba(15,23,42,.10); }
+
+/* Hide internal scrollbar on the phone main area without breaking native scroll */
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { width: 0; height: 0; display: none; }
+
+/* High-contrast: thicker focus rings + bumped border weight */
+html.theme-hc *:focus-visible { outline: 2px solid var(--accent) !important; outline-offset: 2px; }
+html.theme-hc .phone-shell-frame button { font-weight: 600; }

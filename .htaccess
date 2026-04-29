@@ -1,0 +1,9 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Don't rewrite requests already targeting public/
+    RewriteCond %{REQUEST_URI} !^/twilio-app/public/
+
+    # Route everything else through Laravel's public/ front controller
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
