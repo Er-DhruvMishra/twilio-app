@@ -16,4 +16,4 @@ fi
 
 # Replace this cron-spawned process with Reverb so it stays alive in the
 # foreground; the next minute's tick will see it via pgrep and exit early.
-exec "$PHP" artisan reverb:start --host=0.0.0.0 --port=6001
+exec "$PHP" artisan reverb:start --host=127.0.0.1 --port=6001
