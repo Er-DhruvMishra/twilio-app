@@ -57,7 +57,6 @@ class SmsSender
                 'status' => $sent->status ?: 'sent',
                 'sent_at' => now(),
             ]);
-            MessageStatusUpdated::dispatch($message->fresh());
         } catch (\Throwable $e) {
             DebugLogger::trace('messaging', 'messages.create', array_merge($params, ['to' => $to]), null, $e);
             $message->update([
@@ -65,11 +64,29 @@ class SmsSender
                 'error_code' => method_exists($e, 'getCode') ? (string) $e->getCode() : null,
                 'error_message' => $e->getMessage(),
             ]);
-            MessageStatusUpdated::dispatch($message->fresh());
+            // Broadcast the failure for the UI, then re-raise the real Twilio error.
+            self::broadcastStatus($message->fresh());
             throw $e;
         }
 
+        self::broadcastStatus($message->fresh());
+
         return $message->fresh();
+    }
+
+    /**
+     * Push a status update to connected clients. Best-effort: a down or
+     * misconfigured Reverb must never flip a successfully sent message to
+     * "failed" (its error then overflowing error_message) or bubble out of send().
+     */
+    private static function broadcastStatus(Message $message): void
+    {
+        try {
+            MessageStatusUpdated::dispatch($message);
+        } catch (\Throwable $e) {
+            DebugLogger::trace('messaging', 'broadcast.MessageStatusUpdated', ['message_id' => $message->id], null, $e);
+            report($e);
+        }
     }
 
     /** Stable per-pair conversation key — sorted lexicographically for symmetry. */

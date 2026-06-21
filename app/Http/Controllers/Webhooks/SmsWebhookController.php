@@ -98,7 +98,13 @@ class SmsWebhookController extends Controller
             if ($errorMessage) $patch['error_message'] = (string) $errorMessage;
             if ($status === 'delivered') $patch['delivered_at'] = now();
             $message->update($patch);
-            MessageStatusUpdated::dispatch($message->fresh());
+            // Best-effort: a down Reverb must not 500 Twilio's status callback.
+            try {
+                MessageStatusUpdated::dispatch($message->fresh());
+            } catch (\Throwable $e) {
+                DebugLogger::trace('messaging', 'broadcast.MessageStatusUpdated', ['message_id' => $message->id], null, $e);
+                report($e);
+            }
         }
 
         return response('', 204);
